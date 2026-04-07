@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Slides - Listas e Matrizes em Python</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a2e;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 80px;
+            page-break-after: always;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        
+        .slide:nth-child(1) { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; }
+        .slide:nth-child(2) { background: linear-gradient(135deg, #e94560 0%, #533483 100%); color: white; }
+        .slide:nth-child(3) { background: linear-gradient(135deg, #0f3460 0%, #16213e 100%); color: white; }
+        .slide:nth-child(4) { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
+        .slide:nth-child(5) { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
+        .slide:nth-child(6) { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .slide:nth-child(7) { background: linear-gradient(135deg, #e94560 0%, #533483 100%); color: white; }
+        .slide:nth-child(8) { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; }
+        .slide:nth-child(9) { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
+        .slide:nth-child(10) { background: linear-gradient(135deg, #0f3460 0%, #16213e 100%); color: white; }
+        .slide:nth-child(11) { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
+        .slide:nth-child(12) { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .slide:nth-child(13) { background: linear-gradient(135deg, #e94560 0%, #533483 100%); color: white; }
+        .slide:nth-child(14) { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; }
+        .slide:nth-child(15) { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
+        .slide:nth-child(16) { background: linear-gradient(135deg, #0f3460 0%, #16213e 100%); color: white; }
+        .slide:nth-child(17) { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
+        .slide:nth-child(18) { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .slide:nth-child(19) { background: linear-gradient(135deg, #e94560 0%, #533483 100%); color: white; }
+        
+        h1 {
+            font-size: 72px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 48px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h3 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+        
+        .subtitulo {
+            font-size: 28px;
+            text-align: center;
+            opacity: 0.9;
+        }
+        
+        .codigo {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            margin: 20px 0;
+            overflow-x: auto;
+            width: 100%;
+            text-align: left;
+        }
+        
+        .codigo pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        
+        .destaque {
+            background: rgba(255,215,0,0.2);
+            border-left: 8px solid #ffaa00;
+            padding: 20px;
+            border-radius: 16px;
+            margin: 20px 0;
+            width: 100%;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            font-size: 18px;
+        }
+        
+        th {
+            background: rgba(0,0,0,0.3);
+            font-weight: bold;
+        }
+        
+        .card {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 16px;
+            margin: 15px 0;
+            width: 100%;
+        }
+        
+        .card-exemplo {
+            background: rgba(0,0,0,0.3);
+            border-left: 8px solid #00ff88;
+        }
+        
+        ul, ol {
+            font-size: 22px;
+            line-height: 1.6;
+            margin-left: 40px;
+        }
+        
+        li {
+            margin: 10px 0;
+        }
+        
+        .emoji {
+            font-size: 64px;
+            display: block;
+            text-align: center;
+            margin: 20px;
+        }
+        
+        .pagina {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        
+        .quadro {
+            background: #2d2d2d;
+            padding: 20px;
+            border-radius: 16px;
+            font-family: monospace;
+            font-size: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .tabela-exemplo {
+            background: rgba(255,255,255,0.2);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .tabela-exemplo table {
+            margin: 0 auto;
+            width: auto;
+            background: rgba(0,0,0,0.3);
+        }
+        
+        .tabela-exemplo td, .tabela-exemplo th {
+            padding: 12px 20px;
+            text-align: center;
+        }
+        
+        .alerta {
+            background: rgba(255,0,0,0.2);
+            border-left: 8px solid #ff0000;
+            padding: 20px;
+            border-radius: 16px;
+            margin: 20px 0;
+        }
+        
+        @media print {
+            .slide {
+                page-break-after: always;
+                box-shadow: none;
+                margin: 0;
+                border-radius: 0;
+            }
+            body {
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- SLIDE 1 - TÍTULO -->
+    <div class="slide">
+        <div class="emoji">📋</div>
+        <h1>Listas e Matrizes em Python</h1>
+        <div class="subtitulo">Organizando dados como um profissional!</div>
+        <div class="pagina">Aula de Programação</div>
+    </div>
+
+    <!-- SLIDE 2 - ROTEIRO DA AULA -->
+    <div class="slide">
+        <h2>📋 Roteiro da Aula</h2>
+        <div class="card">
+            <ol>
+                <li>🔄 Revisão da aula anterior</li>
+                <li>📊 Listas (vetores)</li>
+                <li>🔢 Matrizes (tabelas)</li>
+                <li>📌 Organizando listas (sort, sorted, reverse)</li>
+                <li>💪 Desafios (foco no quadro)</li>
+                <li>📝 Exercícios para casa</li>
+            </ol>
+        </div>
+        <div class="destaque">
+            <p>⚠️ <strong>Atenção:</strong> Metade da aula será dedicada à explicação! Exercícios serão para casa.</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 3 - OBJETIVOS DA AULA -->
+    <div class="slide">
+        <h2>🎯 Objetivos da Aula</h2>
+        <div class="card">
+            <ul>
+                <li>Aprender a <strong>criar e manipular listas</strong> em Python</li>
+                <li>Entender o conceito de <strong>índices</strong> (posições)</li>
+                <li>Compreender <strong>matrizes</strong> (listas de listas)</li>
+                <li><strong>Organizar listas</strong> com sort(), sorted() e reverse()</li>
+                <li>Aplicar listas em <strong>problemas do dia a dia</strong></li>
+            </ul>
+        </div>
+        <div class="emoji">🎯</div>
+    </div>
+
+    <!-- SLIDE 4 - MATERIAL DE APOIO (LISTA DE COMPRAS) -->
+    <div class="slide">
+        <h2>📄 Listas no Dia a Dia</h2>
+        <div class="card card-exemplo">
+            <h3>Exemplo: Lista de Compras</h3>
+            <div class="quadro">
+                🥛 Leite<br>
+                🥚 Ovos<br>
+                🍞 Pão<br>
+                🍎 Maçã<br>
+                🧀 Queijo
+            </div>
+            <p>No Python, isso vira uma <strong>lista</strong>!</p>
+            <div class="codigo">
+                <pre>compras = ["Leite", "Ovos", "Pão", "Maçã", "Queijo"]</pre>
+            </div>
+        </div>
+        <p><em>"Listas estão em todo lugar: cardápios, chamadas, tarefas..."</em></p>
+    </div>
+
+    <!-- SLIDE 5 - REVISÃO -->
+    <div class="slide">
+        <h2>🔄 Revisão</h2>
+        <div class="card">
+            <h3>O que já sabemos?</h3>
+            <ul>
+                <li>Variáveis (guardam 1 valor)</li>
+                <li>Input e Print</li>
+                <li>Estruturas condicionais (if/else)</li>
+            </ul>
+        </div>
+        <div class="destaque">
+            <p>💡 <strong>Problema:</strong> E se precisarmos guardar 50 notas de alunos? Vamos criar 50 variáveis?</p>
+            <p><strong>Solução: LISTAS!</strong></p>
+        </div>
+    </div>
+
+    <!-- SLIDE 6 - O QUE SÃO LISTAS? (ATUALIZADO) -->
+    <div class="slide">
+        <h2>📊 Mas o que são listas?</h2>
+        <div class="card">
+            <p>Em programação, <strong>listas</strong> são uma <strong>coleção de itens</strong> em uma ordem específica.</p>
+            <br>
+            <p>Você pode criar uma lista com:</p>
+            <ul>
+                <li>📝 Letras do alfabeto</li>
+                <li>🔢 Números de 1 a 100</li>
+                <li>🛒 Produtos de supermercado</li>
+                <li>🎉 Convidados de uma festa</li>
+            </ul>
+            <br>
+            <p>Em Python, você pode colocar <strong>qualquer dado</strong> em uma lista, inclusive dados que não estão relacionados.</p>
+            <br>
+            <p>Para criar uma lista, utilize <strong>colchetes ([ ])</strong> e separe com <strong>vírgulas</strong> os itens que serão armazenados.</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 7 - EXEMPLO DE LISTA (CONVIDADOS) -->
+    <div class="slide">
+        <h2>🎉 Criando uma Lista de Convidados</h2>
+        <div class="card">
+            <div class="codigo">
+                <pre>convidados = ["José", "Lucas", "Ana", "Enzo", "Valentina"]
+
+print(convidados)</pre>
+            </div>
+            <div class="quadro">
+                Saída: ['José', 'Lucas', 'Ana', 'Enzo', 'Valentina']
+            </div>
+            <p>Observe que, quando uma lista é impressa, é exibida uma representação da lista, incluindo os <strong>colchetes</strong>.</p>
+            <p>Porém, há outras formas para exibir tais itens...</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 8 - OPERAÇÕES COM LISTAS -->
+    <div class="slide">
+        <h2>⚙️ Operações com Listas</h2>
+        <div class="card">
+            <table>
+                <tr>
+                    <th>Operação</th>
+                    <th>Código</th>
+                    <th>Resultado</th>
+                </tr>
+                <tr>
+                    <td>Criar lista</td>
+                    <td><code>lista = [1, 2, 3]</code></td>
+                    <td>[1, 2, 3]</td>
+                </tr>
+                <tr>
+                    <td>Acessar item</td>
+                    <td><code>lista[0]</code></td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>Adicionar no final</td>
+                    <td><code>lista.append(4)</code></td>
+                    <td>[1, 2, 3, 4]</td>
+                </tr>
+                <tr>
+                    <td>Adicionar em posição</td>
+                    <td><code>lista.insert(1, 99)</code></td>
+                    <td>[1, 99, 2, 3, 4]</td>
+                </tr>
+                <tr>
+                    <td>Remover por valor</td>
+                    <td><code>lista.remove(2)</code></td>
+                    <td>[1, 99, 3, 4]</td>
+                </tr>
+                <tr>
+                    <td>Remover por índice (pop)</td>
+                    <td><code>lista.pop(0)</code></td>
+                    <td>Remove e retorna o 1º item</td>
+                </tr>
+                <tr>
+                    <td>Remover por índice (del)</td>
+                    <td><code>del lista[1]</code></td>
+                    <td>Remove o item da posição 1</td>
+                </tr>
+                <tr>
+                    <td>Ordenar</td>
+                    <td><code>lista.sort()</code></td>
+                    <td>[1, 3, 4, 99]</td>
+                </tr>
+                <tr>
+                    <td>Ordenar sem alterar</td>
+                    <td><code>sorted(lista)</code></td>
+                    <td>Retorna lista ordenada</td>
+                </tr>
+                <tr>
+                    <td>Inverter ordem</td>
+                    <td><code>lista.reverse()</code></td>
+                    <td>[4, 3, 1]</td>
+                </tr>
+                <tr>
+                    <td>Tamanho da lista</td>
+                    <td><code>len(lista)</code></td>
+                    <td>3</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- SLIDE 9 - MÉTODO APPEND -->
+    <div class="slide">
+        <h2>➕ Método append()</h2>
+        <div class="card">
+            <p>O método <strong>append()</strong> adiciona um elemento no <strong>FINAL</strong> da lista.</p>
+            <div class="codigo">
+                <pre>lista = ["João", "Maria", "Felipe"]
+lista.append("Danilo")
+
+print(lista)
+# Saída: ['João', 'Maria', 'Felipe', 'Danilo']</pre>
+            </div>
+            <div class="quadro">
+                Antes: [João, Maria, Felipe]<br>
+                Depois: [João, Maria, Felipe, <strong style="color: #00ff88;">Danilo</strong>]
+            </div>
+            <p><strong>Regra:</strong> append() sempre adiciona na ÚLTIMA posição!</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 10 - MÉTODO INSERT -->
+    <div class="slide">
+        <h2>📌 Método insert()</h2>
+        <div class="card">
+            <p>O método <strong>insert()</strong> adiciona um elemento em <strong>qualquer posição</strong> da lista.</p>
+            <div class="codigo">
+                <pre>lista = ["João", "Maria", "Felipe"]
+lista.insert(1, "Danilo")  # posição 1, valor "Danilo"
+
+print(lista)
+# Saída: ['João', 'Danilo', 'Maria', 'Felipe']</pre>
+            </div>
+            <div class="quadro">
+                Antes: [João, Maria, Felipe]<br>
+                Depois: [João, <strong style="color: #00ff88;">Danilo</strong>, Maria, Felipe]
+            </div>
+            <p><strong>Sintaxe:</strong> <code>insert(posição, valor)</code></p>
+        </div>
+    </div>
+
+    <!-- SLIDE 11 - MÉTODO POP -->
+    <div class="slide">
+        <h2>🗑️ Método pop()</h2>
+        <div class="card">
+            <p>O método <strong>pop()</strong> remove um elemento pelo índice e <strong>retorna</strong> o valor removido.</p>
+            <div class="codigo">
+                <pre>lista = ["João", "Maria", "Felipe", "Danilo"]
+removido = lista.pop(1)  # remove o índice 1 (Maria)
+
+print(f"Removido: {removido}")
+print(f"Lista atual: {lista}")
+# Saída:
+# Removido: Maria
+# Lista atual: ['João', 'Felipe', 'Danilo']</pre>
+            </div>
+            <div class="quadro">
+                Antes: [João, Maria, Felipe, Danilo]<br>
+                Removeu: <strong style="color: #ffaaaa;">Maria</strong> (índice 1)<br>
+                Depois: [João, Felipe, Danilo]
+            </div>
+            <p><strong>Sem índice:</strong> <code>pop()</code> remove o ÚLTIMO elemento.</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 12 - ORGANIZANDO LISTAS (INTRODUÇÃO) -->
+    <div class="slide">
+        <h2>📌 Organizando Listas</h2>
+        <div class="card">
+            <p>Problema: O usuário pode inserir números em qualquer ordem!</p>
+            <div class="codigo">
+                <pre># Exemplo: usuário digita 1, 5, 2
+numeros = [1, 5, 2]  # Está desordenado!</pre>
+            </div>
+            <p><strong>Solução:</strong> Python tem métodos para ordenar listas!</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 13 - MÉTODO SORT() -->
+    <div class="slide">
+        <h2>📊 Método sort()</h2>
+        <div class="card">
+            <p>O método <strong>sort()</strong> altera a posição dos itens para colocá-los em ordem:</p>
+            <ul>
+                <li>Textos: ordem alfabética (A → Z)</li>
+                <li>Números: ordem crescente</li>
+            </ul>
+            <div class="codigo">
+                <pre>convidados = ["Carlos", "Ana", "Bruno", "Daniel"]
+
+# Ordem crescente (A → Z)
+convidados.sort()
+print(convidados)  # ['Ana', 'Bruno', 'Carlos', 'Daniel']</pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 14 - FUNÇÃO SORTED() -->
+    <div class="slide">
+        <h2>📊 Função sorted()</h2>
+        <div class="card">
+            <p>A função <strong>sorted()</strong> exibe os itens em ordem <strong>sem alterar</strong> a lista original.</p>
+            <div class="codigo">
+                <pre>numeros = [3, 1, 4, 1, 5, 9]
+
+# Exibir ordenado sem modificar a lista
+print(sorted(numeros))     # [1, 1, 3, 4, 5, 9]
+
+# Lista original continua igual!
+print(numeros)  # [3, 1, 4, 1, 5, 9]</pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 15 - MÉTODO REVERSE() -->
+    <div class="slide">
+        <h2>🔄 Método reverse()</h2>
+        <div class="card">
+            <p>O método <strong>reverse()</strong> simplesmente <strong>inverte a ordem</strong> da lista (último vira primeiro).</p>
+            <div class="quadro">
+                🚗 Estacionamento: Carro1 → Carro2 → Carro3 → Carro4<br>
+                🚗 reverse(): Carro4 → Carro3 → Carro2 → Carro1
+            </div>
+            <div class="codigo">
+                <pre>carros = ["Fusca", "Civic", "Corolla", "Gol"]
+
+carros.reverse()
+print(carros)  # ['Gol', 'Corolla', 'Civic', 'Fusca']</pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 16 - MATRIZES (INTRODUÇÃO) -->
+    <div class="slide">
+        <h2>🔢 O que são Matrizes?</h2>
+        <div class="card">
+            <p>As matrizes estão presentes em <strong>jogos de tabuleiro</strong> (como Campo Minado e Xadrez), em <strong>planilhas eletrônicas</strong>, entre outros.</p>
+            <br>
+            <p>Por exemplo, a planilha abaixo poderia ser implementada com <strong>duas listas com seis itens cada</strong>.</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 17 - EXEMPLO DA PLANILHA -->
+    <div class="slide">
+        <h2>📊 Exemplo: Planilha</h2>
+        <div class="tabela-exemplo">
+            <table style="margin: 0 auto; width: auto; background: rgba(0,0,0,0.3);">
+                <tr style="background: rgba(255,255,255,0.2);">
+                    <th style="text-align: center;">A</th>
+                    <th style="text-align: center;">B</th>
+                </tr>
+                <tr>
+                    <th style="text-align: center;">Nome</th>
+                    <th style="text-align: center;">Time</th>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">José</td>
+                    <td style="text-align: center;">Palmeiras</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">Maria</td>
+                    <td style="text-align: center;">Flamengo</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">Tiago</td>
+                    <td style="text-align: center;">Sport</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">Pablo</td>
+                    <td style="text-align: center;">Treze</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">Luana</td>
+                    <td style="text-align: center;">Cruzeiro</td>
+                </tr>
+            </table>
+        </div>
+        <p>Esta planilha pode ser implementada com uma <strong>matriz (lista de listas)</strong> em Python!</p>
+    </div>
+
+    <!-- SLIDE 18 - CÓDIGO DA MATRIZ -->
+    <div class="slide">
+        <h2>💻 Código da Matriz</h2>
+        <div class="card">
+            <p>Veja o código necessário para armazenar os dados da planilha anterior:</p>
+            <div class="codigo">
+                <pre>timesXPessoas = [
+    ["Palmeiras", "Flamengo", "Sport", "Treze", "Cruzeiro"],
+    ["José", "Maria", "Tiago", "Pablo", "Luana"]
+]
+
+print(timesXPessoas[1][2])  # Mostra: Tiago
+print(timesXPessoas[0][2])  # Mostra: Sport</pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 19 - ACESSANDO MATRIZES -->
+    <div class="slide">
+        <h2>📍 Acessando Matrizes</h2>
+        <div class="card">
+            <p>Para acessar valores de uma matriz:</p>
+            <div class="destaque">
+                <p style="font-size: 28px; text-align: center;">
+                    <strong>matriz[linha][coluna]</strong>
+                </p>
+            </div>
+            <ul>
+                <li>Primeiro: índice da <strong>lista armazenada</strong> (linha)</li>
+                <li>Depois: índice do <strong>item que você quer acessar</strong> (coluna)</li>
+            </ul>
+            <div class="codigo">
+                <pre># No exemplo:
+# timesXPessoas[1][2] → linha 1, coluna 2 → "Tiago"
+# timesXPessoas[0][2] → linha 0, coluna 2 → "Sport"</pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 20 - FINALIZAÇÃO -->
+    <div class="slide">
+        <div class="emoji">🏆</div>
+        <h2>Para Fixar os Conceitos</h2>
+        <div class="card">
+            <p>Quantas coisas são possíveis com listas, não é mesmo?</p>
+            <br>
+            <p>Para fixar os conceitos aprendidos nesta aula, <strong>faça todos os exercícios e desafios</strong>.</p>
+            <br>
+            <div class="destaque">
+                <p>💡 <strong>Dica:</strong> Quanto mais você praticar o que aprende em programação, sem dúvidas conseguirá criar programas cada vez mais complexos!</p>
+            </div>
+        </div>
+        <div class="emoji">🎓</div>
+        <div class="subtitulo">Até a próxima aula! 🚀</div>
+    </div>
+
+</body>
+</html>

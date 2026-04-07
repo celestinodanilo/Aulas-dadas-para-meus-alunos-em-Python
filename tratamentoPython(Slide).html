@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Slides - Tratamento de Exceções em Python</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a2e;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 80px;
+            page-break-after: always;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        
+        /* Cores dos slides */
+        .slide:nth-child(1) { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; }
+        .slide:nth-child(2) { background: linear-gradient(135deg, #e94560 0%, #533483 100%); color: white; }
+        .slide:nth-child(3) { background: linear-gradient(135deg, #0f3460 0%, #16213e 100%); color: white; }
+        .slide:nth-child(4) { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
+        .slide:nth-child(5) { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
+        .slide:nth-child(6) { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .slide:nth-child(7) { background: linear-gradient(135deg, #e94560 0%, #533483 100%); color: white; }
+        .slide:nth-child(8) { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; }
+        .slide:nth-child(9) { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
+        .slide:nth-child(10) { background: linear-gradient(135deg, #0f3460 0%, #16213e 100%); color: white; }
+        .slide:nth-child(11) { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
+        .slide:nth-child(12) { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .slide:nth-child(13) { background: linear-gradient(135deg, #e94560 0%, #533483 100%); color: white; }
+        .slide:nth-child(14) { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; }
+        .slide:nth-child(15) { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
+        
+        h1 {
+            font-size: 72px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 48px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h3 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+        
+        .subtitulo {
+            font-size: 28px;
+            text-align: center;
+            opacity: 0.9;
+        }
+        
+        .codigo {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            margin: 20px 0;
+            overflow-x: auto;
+            width: 100%;
+            text-align: left;
+        }
+        
+        .codigo pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        
+        .codigo-errado {
+            background: #4a0000;
+            color: #ffaaaa;
+            border-left: 5px solid #ff0000;
+        }
+        
+        .codigo-certo {
+            background: #004a00;
+            color: #aaffaa;
+            border-left: 5px solid #00ff00;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        th {
+            background: rgba(0,0,0,0.3);
+            font-weight: bold;
+        }
+        
+        .card {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 16px;
+            margin: 15px 0;
+            width: 100%;
+        }
+        
+        .card-destaque {
+            background: rgba(0,0,0,0.3);
+            border-left: 8px solid #ffaa00;
+        }
+        
+        ul, ol {
+            font-size: 22px;
+            line-height: 1.6;
+            margin-left: 40px;
+        }
+        
+        li {
+            margin: 10px 0;
+        }
+        
+        .emoji {
+            font-size: 64px;
+            display: block;
+            text-align: center;
+            margin: 20px;
+        }
+        
+        .pagina {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        
+        .participacao {
+            background: rgba(255,215,0,0.2);
+            border: 2px solid gold;
+            border-radius: 20px;
+            padding: 15px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .participacao h3 {
+            color: gold;
+            margin-bottom: 10px;
+        }
+        
+        @media print {
+            .slide {
+                page-break-after: always;
+                box-shadow: none;
+                margin: 0;
+                border-radius: 0;
+            }
+            body {
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ==================================================== -->
+    <!-- SLIDE 1 - TÍTULO -->
+    <!-- ==================================================== -->
+    <div class="slide">
+        <div class="emoji">🐍</div>
+        <h1>Tratamento de Exceções em Python</h1>
+        <div class="subtitulo">Tornando seus jogos e programas mais robustos</div>
+        <div class="pagina">Aula de Programação</div>
+    </div>
+
+    <!-- ==================================================== -->
+    <!-- SLIDE 2 - SUMÁRIO DA AULA -->
+    <!-- ==================================================== -->
+    <div class="slide">
+        <h2>📋 Roteiro da Aula</h2>
+        <div class="card">
+            <ol>
+                <li>📺 Exibição de vídeo (Materiais Extras)</li>
+                <li>🐛 Exemplos de códigos e jogos <strong>sem tratamento</strong> de exceções</li>
+                <li>💬 Participação da turma - apontar defeitos e problemas</li>
+                <li>🛠️ Propostas de tratamento de exceções (professor + alunos)</li>
+                <li>📖 Atividades: Exemplos de Exceções</li>
+                <li>⚙️ Tratamento de Exceções: try, except, else</li>
+                <li>✏️ Exercícios e Desafios (individual)</li>
+            </ol>
+        </div>
+        <div class="participacao">
+            <h3>🗣️ PARTICIPAÇÃO OBRIGATÓRIA!</h3>
+            <p>Todos os alunos devem opinar durante toda a aula!</p>
+        </div>
+    </div>
+
+    <!-- ==================================================== -->
+    <!-- SLIDE 3 - VÍDEO / INTRODUÇÃO -->
+    <!-- ==================================================== -->
+    <div class="slide">
+        <h2>📺 Vamos começar!</h2>
+        <div class="card">
+            <div class="emoji">🎬</div>
+            <h3>Exibição do vídeo: Materiais Extras</h3>
+            <p>O vídeo mostra bugs e erros em jogos causados por <strong>exceções não tratadas</strong>.</p>
+            <br>
+            <p><em>"Prestem atenção! Depois do vídeo, vocês vão analisar códigos reais com problemas."</em></p>
+        </div>
+    </div>
+
+    <!-- ==================================================== -->
+    <!-- SLIDE 4 - CÓDIGO 1: JOGO DE ADIVINHAÇÃO (SEM TRATAMENTO) -->
+    <!-- ==================================================== -->
+    <div class="slide">
+        <h2>🎮 Exemplo 1: Jogo de Adivinhação</h2>
+        <div class="card card-destaque">
+            <h3>⚠️ CÓDIGO SEM TRATAMENTO</h3>
+            <div class="codigo codigo-errado">
+                <pre># Jogo de adivinhação - VERSÃO COM BUG
+import random
+
+numero_secreto = random.randint(1, 10)
+print("Adivinhe o número entre 1 e 10!")
+
+palpite = int(input("Digite seu palpite: "))
+
+if palpite == numero_secreto:
+    print("Parabéns! Você acertou!")
+else:
+    print(f"Errou! O número era {numero_secreto}")</pre>
+            </div>
+        </div>
+        <div class="participacao">
+            <h3>❓ PERGUNTA PARA A TURMA</h3>
+            <p>O que acontece se o usuário digitar "cinco" ou "3.5"?</p>
+        </div>
+    </div>
+
+    <!-- ==================================================== -->
+    <!-- SLIDE 5 - CÓDIGO 2: CALCULADORA (SEM TRATAMENTO) -->
+    <!-- ==================================================== -->
+    <div class="slide">
+        <h2>🧮 Exemplo 2: Calculadora Simples</h2>
+        <div class="card card-destaque">
+            <h3>⚠️ CÓDIGO SEM TRATAMENTO</h3>
+            <div class="codigo codigo-errado">
+                <pre># Calculadora de divisão
+print("Calculadora: 10 dividido por X")
+
+x = int(input("Digite o valor de X: "))
+resultado = 10 / x
+
+print(f"10 / {x} = {resultado}")</pre>
+            </div>
+        </div>
+        <div class="participacao">
+            <h3>❓ PERGUNTA PARA A TURMA</h3>
+            <p>Quais problemas vocês identificam neste código?</p>
+        </div>
+    </div>
+
+    <!-- ==================================================== -->
+    <!-- SLIDE 6 - CÓDIGO 3: LISTA DE COMPRAS (SEM TRATAMENTO) -->
+    <!-- ==================================================== -->
+    <div class="slide">
+        <h2>🛒 Exemplo 3: Lista de Compras</h2>
+        <div class="card card-destaque">
+            <h3>⚠️ CÓDIGO SEM TRATAMENTO</h3>
+            <div class="codigo codigo-errado">
+                <pre># Lista de compras
+compras = ["Arroz", "Feijão", "Macarrão"]
+
+indice = int(input("Digite o índice do produto (0 a 2): "))
+print(f"Produto: {compras[indice]}")</pre>
+            </div>
+        </div>
+        <div class="participacao">
+            <h3>❓ PERGUNTA PARA A TURMA</h3>
+            <p>O que acontece se o usuário digitar 5 ou -1?</p>
+        </div>
+    </div>
+
+    <!-- ==================================================== -->
+    <!-- SLIDE 7 - ALUNOS APONTAM OS PROBLEMAS -->
+    <!-- ==================================================== -->
+    <div class="slide">
+        <h2>🔍 HORA DA PARTICIPAÇÃO!</h2>
+        <div class="card">
+            <h3>Quais erros podem acontecer?</h3>
+            <table>
+                <tr>
+                    <th>Código</th>
+                    <th>Problema</th>
+                    <th>Tipo de Erro</th>
+                </tr>
+                <tr>
+                    <td>Jogo de Adivinhação</td>
+                    <td>Digitar letra ou número decimal</td>
+                    <td><code>ValueError</code></td>
+                </tr>
+                <tr>
+                    <td>Calculadora</td>
+                    <td>Digitar 0 na divisão</td>
+                    <td><code>ZeroDivisionError</code></td>
+                </tr>
+                <tr>
+                    <td>Lista de Compras</td>
+                    <td>Digitar índice fora do intervalo</td>
+                    <td><code>IndexError</code></td>
+                </tr>
+            </table>
+        </div>
+        <div class="participacao">
+            <h3>🗣️ ALUNOS</h3>
+            <p>Apontem mais problemas que vocês enxergam!</p>
+        </div>
+    </div>
+
+    <!-- ==================================================== -->
+    <!-- SLIDE 8 - PROPOSTA DE TRATAMENTO (PROFESSOR + ALUNOS) -->
+    <!-- ==================================================== -->
+    <div class="slide">
+        <h2>🛠️ Vamos corrigir JUNTOS!</h2>
+        <div class="card">
+            <h3>Jogo de Adivinhação - CORRIGIDO</h3>
+            <div class="codigo codigo-certo">
+                <pre>import random
+
+numero_secreto = random.randint(1, 10)
+print("Adivinhe o número entre 1 e 10!")
+
+try:
+    palpite = int(input("Digite seu palpite: "))
+except ValueError:
+    print("❌ Erro! Digite apenas NÚMEROS inteiros!")
+else:
+    if palpite == numero_secreto:
+        print("Parabéns! Você acertou!")
+    else:
+        print(f"Errou! O número era {numero_secreto}")</pre>
+            </div>
+        </div>
+        <div class="participacao">
+            <h3>💡 Qual a diferença?</h3>
+            <p>O programa não quebra mais quando o usuário erra a digitação!</p>
+        </div>
+    </div>
+
+    <!-- ==================================================== -->
+    <!-- SLIDE 9 - CORREÇÃO DA CALCULADORA -->
+    <!-- ==================================================== -->
+    <div class="slide">
+        <h2>🛠️ Corrigindo a Calculadora</h2>
+        <div class="card">
+            <h3>Calculadora - CORRIGIDA</h3>
+            <div class="codigo codigo-certo">
+                <pre>print("Calculadora: 10 dividido por X")
+
+try:
+    x = int(input("Digite o valor de X: "))
+    resultado = 10 / x
+except ValueError:
+    print("❌ Digite apenas números!")
+except ZeroDivisionError:
+    print("❌ Não é possível dividir por zero!")
+else:
+    print(f"10 / {x} = {resultado}")</pre>
+            </div>
+        </div>
+        <div class="participacao">
+            <h3>⚠️ Atenção!</h3>
+            <p>Usamos DOIS except para erros diferentes!</p>
+        </div>
+    </div>
+
+    <!-- ==================================================== -->
+    <!-- SLIDE 10 - CORREÇÃO DA LISTA DE COMPRAS -->
+    <!-- ==================================================== -->
+    <div class="slide">
+        <h2>🛠️ Corrigindo a Lista de Compras</h2>
+        <div class="card">
+            <h3>Lista de Compras - CORRIGIDA</h3>
+            <div class="codigo codigo-certo">
+                <pre>compras = ["Arroz", "Feijão", "Macarrão"]
+
+try:
+    indice = int(input("Digite o índice (0 a 2): "))
+    print(f"Produto: {compras[indice]}")
+except ValueError:
+    print("❌ Digite um número inteiro!")
+except IndexError:
+    print("❌ Índice inválido! Digite 0, 1 ou 2.")</pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================================================== -->
+    <!-- SLIDE 11 - ATIVIDADE 1: EXEMPLOS DE EXCEÇÕES -->
+    <!-- ==================================================== -->
+    <div class="slide">
+        <h2>📖 ATIVIDADE 1: Exemplos de Exceções</h2>
+        <div class="card">
+            <h3>Complete a tabela com o tipo de erro:</h3>
+            <table>
+                <tr>
+                    <th>Código</th>
+                    <th>O que acontece?</th>
+                    <th>Tipo de Exceção</th>
+                </tr>
+                <tr>
+                    <td><code>int("abc")</code></td>
+                    <td>Letra ao invés de número</td>
+                    <td>___________</td>
+                </tr>
+                <tr>
+                    <td><code>10 / 0</code></td>
+                    <td>Divisão por zero</td>
+                    <td>___________</td>
+                </tr>
+                <tr>
+                    <td><code>lista = [1,2,3]; print(lista[5])</code></td>
+                    <td>Índice inexistente</td>
+                    <td>___________</td>
+                </tr>
+            </table>
+        </div>
+        <div class="participacao">
+            <p>Respostas: ValueError, ZeroDivisionError, IndexError</p>
+        </div>
+    </div>
+
+    <!-- ==================================================== -->
+    <!-- SLIDE 12 - ATIVIDADE 2: TRY, EXCEPT, ELSE -->
+    <!-- ==================================================== -->
+    <div class="slide">
+        <h2>⚙️ ATIVIDADE 2: Tratamento de Exceções</h2>
+        <div class="card">
+            <h3>Estrutura básica:</h3>
+            <div class="codigo">
+                <pre>try:
+    # Código que PODE dar erro
+    numero = int(input("Digite um número: "))
+except ValueError:
+    # Executa se der erro
+    print("Isso não é um número válido!")
+else:
+    # Executa se NÃO der erro
+    print(f"O dobro é {numero * 2}")</pre>
+            </div>
+            <p><strong>Lembrete:</strong> O `else` é opcional, mas muito útil!</p>
+        </div>
+    </div>
+
+    <!-- ==================================================== -->
+    <!-- SLIDE 13 - EXERCÍCIO 1 (FÁCIL) -->
+    <!-- ==================================================== -->
+    <div class="slide">
+        <h2>✏️ EXERCÍCIO 1 (Fácil)</h2>
+        <div class="card">
+            <h3>Enunciado:</h3>
+            <p>Crie um programa que pede ao usuário dois números e realiza a divisão do primeiro pelo segundo.</p>
+            <p><strong>Requisitos:</strong></p>
+            <ul>
+                <li>Tratar <code>ValueError</code> (se digitar letras)</li>
+                <li>Tratar <code>ZeroDivisionError</code> (divisão por zero)</li>
+                <li>Exibir o resultado apenas se não houver erro</li>
+            </ul>
+        </div>
+        <div class="participacao">
+            <h3>⏰ Tempo: 10 minutos</h3>
+        </div>
+    </div>
+
+    <!-- ==================================================== -->
+    <!-- SLIDE 14 - EXERCÍCIO 2 (MÉDIO) + DESAFIO -->
+    <!-- ==================================================== -->
+    <div class="slide">
+        <h2>✏️ EXERCÍCIO 2 (Médio) + DESAFIO</h2>
+        <div class="card">
+            <h3>Exercício 2 (Médio):</h3>
+            <p>Modifique o jogo de adivinhação para que o usuário tenha <strong>3 tentativas</strong> e o programa <strong>não quebre</strong> se o usuário digitar letras.</p>
+            <br>
+            <h3>🏆 DESAFIO (Difícil):</h3>
+            <p>Crie um programa de <strong>cadastro de alunos</strong> com 3 notas. Trate:</p>
+            <ul>
+                <li>Erro se digitar letra na nota</li>
+                <li>Erro se digitar nota abaixo de 0 ou acima de 10</li>
+                <li>Erro se digitar nota vazia</li>
+            </ul>
+        </div>
+        <div class="participacao">
+            <h3>⏰ Tempo restante da aula: 30 minutos</h3>
+            <p>Trabalhem sozinhos! Dúvidas? Levantem a mão!</p>
+        </div>
+    </div>
+
+    <!-- ==================================================== -->
+    <!-- SLIDE 15 - FINALIZAÇÃO -->
+    <!-- ==================================================== -->
+    <div class="slide">
+        <div class="emoji">🏆</div>
+        <h2>Resumo da Aula</h2>
+        <div class="card">
+            <ul>
+                <li>✅ Exceções são erros que acontecem durante a execução</li>
+                <li>✅ Códigos <strong>sem tratamento</strong> quebram e fecham</li>
+                <li>✅ <strong>try/except</strong> = "para-quedas" do programa</li>
+                <li>✅ <strong>else</strong> = executa quando dá certo</li>
+                <li>✅ Podemos tratar erros específicos (ValueError, ZeroDivisionError, IndexError)</li>
+            </ul>
+        </div>
+        <div class="emoji">🎓</div>
+        <div class="subtitulo">"Um bom programador não é quem não erra, é quem previne os erros do usuário!"</div>
+        <div class="pagina">Bom trabalho a todos! 🚀</div>
+    </div>
+
+</body>
+</html>
